@@ -37,26 +37,21 @@ function check_devices {
 # Menu principale
 function display_menu {
     
-    #clear
-    #echo "Attivo la modalità aereo"
-    #adb shell settings put global airplane_mode_on 1
     clear
-    echo "Elimino i file del GMS"
+    echo "Attivo la modalità aereo"
+    ./$1/adb shell settings put global airplane_mode_on 1
     sleep 1
-    adb shell pm clear com.google.android.gms
-    clear
-    echo "Eseguo un reboot"
-    sleep 2
-    adb shell reboot
-
-    clear
+    echo ""
+    echo "Elimino i file del GMS ed eseguo un reboot"
+    sleep 1
+    ./$1/adb shell "pm clear com.google.android.gms && reboot"
+    sleep 1
+    echo ""
     echo "Aspetto che Wear si accenda"
-    sleep 50
-
-    clear
+    sleep 60
     echo "Rendo visibile il bluetooh e disattivo la modalità aereo"
-    adb shell am start -a android.bluetooth.adapter.action.REQUEST_DISCOVERABLE
-    #adb shell settings put global airplane_mode_on 0
+    ./$1/adb shell am start -a android.bluetooth.adapter.action.REQUEST_DISCOVERABLE
+    ./$1/adb shell settings put global airplane_mode_on 0
 
 }
 
